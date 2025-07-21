@@ -1,0 +1,1 @@
+## Segundo proyecto grupal. Creación de dos entidades separadas y sus correspondientes capas Controller, Service y Repository, y Tests asociados.
