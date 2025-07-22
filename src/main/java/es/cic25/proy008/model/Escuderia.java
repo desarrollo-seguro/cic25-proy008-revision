@@ -26,9 +26,9 @@ public class Escuderia {
     @Column(name = "nombre") 
     private String nombre;
     @Column(name = "numeroVictorias") 
-    private String numeroVictoria;
+    private String numeroVictorias; // Cambiar numeroVictoria a numeroVictorias
     @Column(name = "numeroPilotos") 
-    private String numeroPiloto;
+    private String numeroPilotos; // Cambiar numeroPiloto a numeroPilotos
     @Column(name = "color") 
     private String color;
 
@@ -52,20 +52,20 @@ public class Escuderia {
 
     // Metodos Getters y Setters deL Id
     public String getNumeroVictorias() {
-        return numeroVictoria;
+        return numeroVictorias;
     }
 
     public void setNumeroVictorias(String numeroVictorias) {
-        this.numeroVictoria = numeroVictorias;
+        this.numeroVictorias = numeroVictorias;
     }
 
     // Metodos Getters y Setters deL Id
     public String getNumeroPilotos() {
-        return numeroPiloto;
+        return numeroPilotos;
     }
 
     public void setNumeroPilotos(String numeroPilotos) {
-        this.numeroPiloto = numeroPilotos;
+        this.numeroPilotos = numeroPilotos;
     }
 
     // Metodos Getters y Setters deL Id
