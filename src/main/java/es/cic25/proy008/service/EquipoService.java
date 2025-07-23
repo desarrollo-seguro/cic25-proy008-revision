@@ -41,9 +41,10 @@ public class EquipoService {
     }
 
     // U
-    public void update(Equipo equipo) {
+    public Equipo update(Equipo equipo) {
         LOGGER.info("se está actualizando el equipo " + equipo);
-        equipoRepository.save(equipo);
+        equipo = equipoRepository.save(equipo);
+        return equipo;
     }
 
     // D

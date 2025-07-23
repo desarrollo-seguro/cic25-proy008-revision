@@ -5,14 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Version;
 
 @Entity
 public class Equipo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Version
     private Long id;
 
     @Column(name = "nombre")

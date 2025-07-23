@@ -58,14 +58,15 @@ public class EquipoController {
 
     // U
     @PutMapping("/{id}")
-    public void update(@PathVariable(required = true) Long id, @RequestBody(required = true) Equipo equipo) {
+    public Equipo update(@PathVariable(required = true) Long id, @RequestBody(required = true) Equipo equipo) {
         if (id.equals(equipo.getId())) { // es decir, si no hay incongruencias y las ids coinciden.
             LOGGER.info("Se está gestionando la petición para leer el equipo " + equipo);
             if (equipoService.get(id).isEmpty()) { // si no hay ningún equipo en base de datos cuya id sea la que se pasa
                 throw new IntentoCreacionSecurityException("Has intentado modificar un equipo, " + equipo + " que no está en base de datos");
             }
             else {
-                equipoService.update(equipo);
+                equipo = equipoService.update(equipo);
+                return equipo;
             }
         }
         else { // es decir, si las ids no coinciden
