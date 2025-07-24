@@ -150,14 +150,12 @@ public class EquipoControllerIntegrationTest {
         mockMvc.perform(post("/equipo")
                 .contentType("application/json")
                 .content(equipo1Json))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
         
         mockMvc.perform(post("/equipo")
                 .contentType("application/json")
                 .content(equipo2Json))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().isOk());
         
         // obtengo la lista a través de una petición get
         MvcResult result = mockMvc.perform(get("/equipo")

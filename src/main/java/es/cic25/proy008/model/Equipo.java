@@ -1,10 +1,13 @@
 package es.cic25.proy008.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Equipo {
@@ -25,6 +28,23 @@ public class Equipo {
     @Column(name = "mejorJugador")
     private String mejorJugador;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "equipo")
+    private Equipo equipo;
+
+    public Equipo() {
+
+    }
+
+    public Equipo(Long id, String nombre, int numeroVictoria, boolean descenso, String mejorJugador, Equipo equipo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.numeroVictoria = numeroVictoria;
+        this.descenso = descenso;
+        this.mejorJugador = mejorJugador;
+        this.equipo = equipo;
+    }
+    
     public Long getId() {
         return id;
     }
