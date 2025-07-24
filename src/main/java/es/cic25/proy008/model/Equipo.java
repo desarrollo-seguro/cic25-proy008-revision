@@ -30,7 +30,7 @@ public class Equipo {
 
     @JsonIgnore
     @OneToOne(mappedBy = "equipo")
-    private Equipo equipo;
+    private Patrocinador patrocinador;
 
     public Equipo() {
 
@@ -42,7 +42,7 @@ public class Equipo {
         this.numeroVictoria = numeroVictoria;
         this.descenso = descenso;
         this.mejorJugador = mejorJugador;
-        this.equipo = equipo;
+        this.patrocinador = patrocinador;
     }
     
     public Long getId() {
