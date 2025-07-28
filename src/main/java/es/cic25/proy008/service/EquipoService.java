@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.cic25.proy008.service.EquipoService;
 import es.cic25.proy008.model.Equipo;
 import es.cic25.proy008.repository.EquipoRepository;
 
+@Transactional
 @Service
 public class EquipoService {
 

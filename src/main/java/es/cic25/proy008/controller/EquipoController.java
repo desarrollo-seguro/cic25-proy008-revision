@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.cic25.proy008.model.Equipo;
+import es.cic25.proy008.model.Patrocinador;
 import es.cic25.proy008.service.EquipoService;
+import es.cic25.proy008.service.PatrocinadorService;
 
 @RestController
 @RequestMapping("/equipo")
@@ -26,6 +28,9 @@ public class EquipoController {
     @Autowired
     private EquipoService equipoService;
     
+    @Autowired
+    private PatrocinadorService patrocinadorService;
+
     // C
     @PostMapping
     public Equipo create(@RequestBody Equipo equipo) {
@@ -60,17 +65,19 @@ public class EquipoController {
     @PutMapping("/{id}")
     public Equipo update(@PathVariable(required = true) Long id, @RequestBody(required = true) Equipo equipo) {
         if (id.equals(equipo.getId())) { // es decir, si no hay incongruencias y las ids coinciden.
-            LOGGER.info("Se está gestionando la petición para leer el equipo " + equipo);
             if (equipoService.get(id).isEmpty()) { // si no hay ningún equipo en base de datos cuya id sea la que se pasa
+                LOGGER.error("Se ha intentado actualizar un equipo sin estar en base de datos");
                 throw new IntentoCreacionSecurityException("Has intentado modificar un equipo, " + equipo + " que no está en base de datos");
             }
             else {
+                LOGGER.info("Se está gestionando la petición para leer el equipo " + equipo);
                 equipo = equipoService.update(equipo);
                 return equipo;
             }
         }
         else { // es decir, si las ids no coinciden
-            throw new IdsNoCoincidenException();
+            LOGGER.error("Se ha intentado actualizar un equipo dando ids contradictorias en cuerpo y URL");
+            throw new IdsNoCoincidenException("La id del cuerpo de la petición y la de la URL no coinciden");
         }
     }
 
@@ -89,5 +96,14 @@ public class EquipoController {
             // LOGGER.info("Se está gestionando la petición para eliminar el equipo de id " + id);
             // equipoService.delete(id);
         // }
+    }
+
+    // C (patrocinador en equipo)
+    @PostMapping("/patrocinio")
+    public Patrocinador create(@RequestBody Patrocinador patrocinador){
+        LOGGER.info("Se está gestionando la petición para crear un patrocinador y consigo el equipo que trae");
+        Patrocinador patrocinadorCreado = patrocinadorService.create(patrocinador);
+
+        return patrocinadorCreado;
     }
 }

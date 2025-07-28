@@ -2,6 +2,7 @@ package es.cic25.proy008.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,8 +29,11 @@ public class Equipo {
     @Column(name = "mejorJugador")
     private String mejorJugador;
 
+    // aquí cortamos la relación. Decimos: "como cuando se crea un objeto del dueño de la relación (Patrocinador), también se crea
+    // uno del que no es dueño (Equipo), no me serialices el objeto de la clase que no es dueña (es decir, Equipo), o entraremos en
+    // un bucle infinito"
     @JsonIgnore
-    @OneToOne(mappedBy = "equipo")
+    @OneToOne(mappedBy = "equipo", cascade = CascadeType.REMOVE)
     private Patrocinador patrocinador;
 
     public Equipo() {
@@ -75,6 +79,13 @@ public class Equipo {
     public void setMejorJugador(String mejorJugador) {
         this.mejorJugador = mejorJugador;
     }
+    public Patrocinador getPatrocinador() {
+        return patrocinador;
+    }
+    public void setPatrocinador(Patrocinador patrocinador) {
+        this.patrocinador = patrocinador;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
