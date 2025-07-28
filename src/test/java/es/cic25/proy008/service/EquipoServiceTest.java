@@ -28,6 +28,7 @@ public class EquipoServiceTest {
         equipo.setDescenso(false);
         equipoService.create(equipo);
         Long idEquipo = equipo.getId();
+        // verificamos que el id sea 1
         assertTrue(idEquipo == 1);
     }
 
@@ -40,7 +41,9 @@ public class EquipoServiceTest {
         equipo.setDescenso(false);
         equipoService.create(equipo);
         Long idEquipo = equipo.getId();
+        // borramos el equipo cuya id sea esta
         equipoService.delete(idEquipo);
+        // y verificamos que en efecto no hay un equipo con tal id
         assertTrue(equipoService.get(idEquipo).isEmpty());
 
     }
@@ -63,6 +66,7 @@ public class EquipoServiceTest {
 
         List<Equipo> listaEquipos = equipoService.get();
 
+        // verificamos que el tamaño de la lista sea 2 (existen más posibles comprobaciones)
         assertEquals(listaEquipos.size(), 2);
     }
 
@@ -91,6 +95,7 @@ public class EquipoServiceTest {
         equipo.setMejorJugador("Andrés Martín");
         equipo.setNumeroVictoria(1);
         equipoService.update(equipo);
+        // verificamos que las actualizaciones se hayan aplicado
         assertEquals(equipo.getMejorJugador(), "Andrés Martín");
         assertTrue(equipo.getNumeroVictoria() == 1);
     }
