@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.cic25.proy008.model.Escuderia;
+import es.cic25.proy008.model.Motor;
 import es.cic25.proy008.repository.EscuderiaRepository;
+import es.cic25.proy008.repository.MotorRepository;
 
 import java.util.Optional;
 
@@ -34,6 +36,9 @@ public class EscuderiaControllerIntegration {
     @Autowired
     EscuderiaRepository escuderiaRepository;
 
+    @Autowired
+    MotorRepository motorRepository;
+
     // Limpia la base de datos antes de cada test para asegurar un entorno limpio
     @BeforeEach
     void clearDb() {
@@ -47,12 +52,21 @@ public class EscuderiaControllerIntegration {
     @Test
     @DisplayName("POST /escuderias guarda la escudería y devuelve JSON con id")
     void shouldCreateEscuderia() throws Exception {
+        // Crear motor de prueba
+        Motor motor = new Motor();
+        motor.setFabricante("Ferrari");
+        motor.setPotencia(1000);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(1);
+        motor = motorRepository.save(motor);
+
         // Crear objeto escuderia de prueba
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Ferrari");
         escuderia.setNumeroVictorias("238");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Rojo");
+        escuderia.setMotor(motor);
 
         String json = objectMapper.writeValueAsString(escuderia);
 
@@ -78,12 +92,21 @@ public class EscuderiaControllerIntegration {
     @Test
     @DisplayName("GET /escuderias/{id} devuelve objeto cuando existe")
     void shouldReturnEscuderia() throws Exception {
+        // Crear motor de prueba
+        Motor motor = new Motor();
+        motor.setFabricante("Mercedes");
+        motor.setPotencia(980);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(2);
+        motor = motorRepository.save(motor);
+
         // PREPARACIÓN: Creamos una escudería de prueba
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Mercedes");
         escuderia.setNumeroVictorias("125");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Plata");
+        escuderia.setMotor(motor);
 
         // Guardamos la escuderia en la base de datos
         escuderia = escuderiaRepository.save(escuderia);
@@ -102,12 +125,28 @@ public class EscuderiaControllerIntegration {
     @Test
     @DisplayName("GET /escuderias devuelve la lista de todas las escuderías")
     void shouldReturnAllEscuderias() throws Exception {
+        // Crear y guardar dos motores de prueba
+        Motor motor1 = new Motor();
+        motor1.setFabricante("Honda");
+        motor1.setPotencia(950);
+        motor1.setTipo("V6 Híbrido");
+        motor1.setAnosUso(2);
+        motor1 = motorRepository.save(motor1);
+
+        Motor motor2 = new Motor();
+        motor2.setFabricante("Renault");
+        motor2.setPotencia(900);
+        motor2.setTipo("V6 Híbrido");
+        motor2.setAnosUso(3);
+        motor2 = motorRepository.save(motor2);
+
         // Crear y guardar dos escuderías de prueba
         Escuderia escuderia1 = new Escuderia();
         escuderia1.setNombre("Red Bull");
         escuderia1.setNumeroVictorias("113");
         escuderia1.setNumeroPilotos("2");
         escuderia1.setColor("Azul");
+        escuderia1.setMotor(motor1);
         escuderiaRepository.save(escuderia1);
 
         Escuderia escuderia2 = new Escuderia();
@@ -115,6 +154,7 @@ public class EscuderiaControllerIntegration {
         escuderia2.setNumeroVictorias("21");
         escuderia2.setNumeroPilotos("2");
         escuderia2.setColor("Azul");
+        escuderia2.setMotor(motor2);
         escuderiaRepository.save(escuderia2);
 
         // Realizar la petición GET y verificar que se devuelven ambas escuderías
@@ -132,12 +172,21 @@ public class EscuderiaControllerIntegration {
     @Test
     @DisplayName("PUT /escuderias actualiza una escudería existente")
     void shouldUpdateEscuderia() throws Exception {
+        // Crear motor de prueba
+        Motor motor = new Motor();
+        motor.setFabricante("Williams");
+        motor.setPotencia(870);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(4);
+        motor = motorRepository.save(motor);
+
         // Crear y guardar una escudería de prueba
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Williams");
         escuderia.setNumeroVictorias("114");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Azul");
+        escuderia.setMotor(motor);
         escuderia = escuderiaRepository.save(escuderia);
 
         // Modificamos algunos campos
@@ -165,12 +214,21 @@ public class EscuderiaControllerIntegration {
     @Test
     @DisplayName("DELETE /escuderias/{id} elimina el registro")
     void shouldDeleteEscuderia() throws Exception {
+        // Crear motor de prueba
+        Motor motor = new Motor();
+        motor.setFabricante("McLaren");
+        motor.setPotencia(930);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(2);
+        motor = motorRepository.save(motor);
+
         // PREPARACIÓN: Creamos una escudería de prueba
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("McLaren");
         escuderia.setNumeroVictorias("183");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Naranja");
+        escuderia.setMotor(motor);
 
         // Guardamos la escuderia en la base de datos
         escuderia = escuderiaRepository.save(escuderia);

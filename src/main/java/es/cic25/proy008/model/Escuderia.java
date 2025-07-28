@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
@@ -36,6 +37,8 @@ public class Escuderia {
     private String color;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "motor_id")
+    private Motor motor;
 
     // Metodos Getters y Setters deL Id
     public Long getId() {
@@ -82,7 +85,13 @@ public class Escuderia {
         this.color = color;
     }
 
+    public Motor getMotor() {
+        return motor;
+    }
 
+    public void setMotor(Motor motor) {
+        this.motor = motor;
+    }
 
     @Override
     public int hashCode() {
