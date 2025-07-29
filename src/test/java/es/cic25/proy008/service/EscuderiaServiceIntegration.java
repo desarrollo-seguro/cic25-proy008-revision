@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import es.cic25.proy008.model.Escuderia;
+import es.cic25.proy008.model.Motor;
 import es.cic25.proy008.repository.EscuderiaRepository;
+import es.cic25.proy008.repository.MotorRepository;
 
 /**
  * Pruebas de integración para EscuderiaService.
@@ -29,20 +30,32 @@ class EscuderiaServiceIntegration {
     @Autowired
     private EscuderiaRepository escuderiaRepository;
 
+    @Autowired
+    private MotorRepository motorRepository;
+
     @BeforeEach
     void setUp() {
         escuderiaRepository.deleteAll();
+        motorRepository.deleteAll();
     }
 
     @Test
     @DisplayName("create() debe persistir una nueva escudería y retornar su ID")
     void shouldCreateEscuderia() {
         // Preparación
+        Motor motor = new Motor();
+        motor.setFabricante("Ferrari");
+        motor.setPotencia(1000);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(1);
+        motor = motorRepository.save(motor);
+
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Ferrari");
         escuderia.setNumeroVictorias("238");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Rojo");
+        escuderia.setMotor(motor);
 
         // Ejecución
         long id = escuderiaService.create(escuderia);
@@ -57,11 +70,19 @@ class EscuderiaServiceIntegration {
     @DisplayName("get() debe retornar la escudería si existe")
     void shouldGetExistingEscuderia() {
         // Preparación
+        Motor motor = new Motor();
+        motor.setFabricante("Mercedes");
+        motor.setPotencia(980);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(2);
+        motor = motorRepository.save(motor);
+
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Mercedes");
         escuderia.setNumeroVictorias("125");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Plata");
+        escuderia.setMotor(motor);
         escuderia = escuderiaRepository.save(escuderia);
 
         // Ejecución
@@ -78,11 +99,26 @@ class EscuderiaServiceIntegration {
     @DisplayName("get() debe retornar todas las escuderías")
     void shouldGetAllEscuderias() {
         // Preparación
+        Motor motor1 = new Motor();
+        motor1.setFabricante("McLaren");
+        motor1.setPotencia(950);
+        motor1.setTipo("V6 Híbrido");
+        motor1.setAnosUso(2);
+        motor1 = motorRepository.save(motor1);
+
+        Motor motor2 = new Motor();
+        motor2.setFabricante("Red Bull");
+        motor2.setPotencia(970);
+        motor2.setTipo("V6 Híbrido");
+        motor2.setAnosUso(1);
+        motor2 = motorRepository.save(motor2);
+
         Escuderia escuderia1 = new Escuderia();
         escuderia1.setNombre("McLaren");
         escuderia1.setNumeroVictorias("183");
         escuderia1.setNumeroPilotos("2");
         escuderia1.setColor("Naranja");
+        escuderia1.setMotor(motor1);
         escuderiaRepository.save(escuderia1);
 
         Escuderia escuderia2 = new Escuderia();
@@ -90,6 +126,7 @@ class EscuderiaServiceIntegration {
         escuderia2.setNumeroVictorias("113");
         escuderia2.setNumeroPilotos("2");
         escuderia2.setColor("Azul");
+        escuderia2.setMotor(motor2);
         escuderiaRepository.save(escuderia2);
 
         // Ejecución
@@ -103,11 +140,19 @@ class EscuderiaServiceIntegration {
     @DisplayName("delete() debe eliminar la escudería existente")
     void shouldDeleteEscuderia() {
         // Preparación
+        Motor motor = new Motor();
+        motor.setFabricante("Alpine");
+        motor.setPotencia(900);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(3);
+        motor = motorRepository.save(motor);
+
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Alpine");
         escuderia.setNumeroVictorias("21");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Azul");
+        escuderia.setMotor(motor);
         escuderia = escuderiaRepository.save(escuderia);
         Long id = escuderia.getId();
 
@@ -123,11 +168,19 @@ class EscuderiaServiceIntegration {
     @DisplayName("update() debe modificar una escudería existente")
     void shouldUpdateEscuderia() {
         // Preparación
+        Motor motor = new Motor();
+        motor.setFabricante("Williams");
+        motor.setPotencia(870);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(4);
+        motor = motorRepository.save(motor);
+
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Williams");
         escuderia.setNumeroVictorias("114");
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Azul");
+        escuderia.setMotor(motor);
         escuderia = escuderiaRepository.save(escuderia);
 
         // Modificamos la escudería

@@ -2,6 +2,7 @@ package es.cic25.proy008.uc;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.cic25.proy008.model.Escuderia;
-import es.cic25.proy008.model.Patrocinadores;
+import es.cic25.proy008.model.Motor;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SeHacenAmigosEscuderiaIntegrationTest {
+public class SeHacenAmigosEscuderiaMotorIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -26,7 +27,7 @@ public class SeHacenAmigosEscuderiaIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testEstablecerAmistadEscuderiaPatrocinador() throws Exception {
+    public void testEstablecerAmistadEscuderiaMotor() throws Exception {
         // Creo primero una escudería
         Escuderia escuderia = new Escuderia();
         escuderia.setNombre("Amigos F1");
@@ -34,15 +35,15 @@ public class SeHacenAmigosEscuderiaIntegrationTest {
         escuderia.setNumeroPilotos("2");
         escuderia.setColor("Verde");
 
-        // Creo un patrocinador
-        Patrocinadores patrocinador = new Patrocinadores();
-        patrocinador.setNombre("SponsorX");
-        patrocinador.setNumeroPatrocinadores(1);
-        patrocinador.setTipo("Financiero");
-        patrocinador.setAnosPatrocinio(3);
+        // Creo un motor
+        Motor motor = new Motor();
+        motor.setFabricante("Honda");
+        motor.setPotencia(950);
+        motor.setTipo("V6 Híbrido");
+        motor.setAnosUso(2);
 
-        // Aquí podrías asociar el patrocinador a la escudería si tienes esa relación en tu modelo
-        // Por ejemplo: escuderia.setPatrocinador(patrocinador);
+        // Aquí podrías asociar el motor a la escudería si tienes esa relación en tu modelo
+        // Por ejemplo: escuderia.setMotor(motor);
 
         // Convertimos el objeto escuderia en JSON
         String escuderiaJson = objectMapper.writeValueAsString(escuderia);
@@ -51,6 +52,7 @@ public class SeHacenAmigosEscuderiaIntegrationTest {
         mockMvc.perform(post("/escuderias")
                 .contentType("application/json")
                 .content(escuderiaJson))
+            .andDo(print())
             .andExpect(status().isOk())
             .andExpect(result -> {
                 assertNotNull(
