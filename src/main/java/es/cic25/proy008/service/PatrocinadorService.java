@@ -17,9 +17,10 @@ import es.cic25.proy008.repository.PatrocinadorRepository;
 @Transactional
 public class PatrocinadorService {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(PatrocinadorService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PatrocinadorService.class);
+    
     @Autowired
-    PatrocinadorRepository patrocinadorRepository;
+    private PatrocinadorRepository patrocinadorRepository;
 
     // C
     public Patrocinador create(Patrocinador patrocinador) {

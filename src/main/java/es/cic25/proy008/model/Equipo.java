@@ -1,14 +1,21 @@
 package es.cic25.proy008.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Max;
 
 @Entity
 public class Equipo {
@@ -21,6 +28,7 @@ public class Equipo {
     private String nombre;
 
     @Column(name = "numeroVictorias")
+    @Max(value = 35)
     private int numeroVictoria;
 
     @Column(name = "descenso")
@@ -35,6 +43,11 @@ public class Equipo {
     @JsonIgnore
     @OneToOne(mappedBy = "equipo", cascade = CascadeType.REMOVE)
     private Patrocinador patrocinador;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}
+                )
+    private List<Mascota> mascotas = new ArrayList<>();
+
 
     public Equipo() {
 
@@ -85,6 +98,15 @@ public class Equipo {
     public void setPatrocinador(Patrocinador patrocinador) {
         this.patrocinador = patrocinador;
     }
+
+
+    public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
+    }    
 
     @Override
     public int hashCode() {
